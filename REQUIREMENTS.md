@@ -11,7 +11,7 @@ A Mavenized Java 8 CLI program connected to a PostgreSQL database. Submit a READ
 - [] `java.sql` JDBC - PreparedStatement, CallableStatement
 - [] JUnit 4
 - [] log4j (or other logging framework)
-
+  
 ### Architecture
 - [] Multiple Packages
 - [] Interfaces/Abstract Classes
@@ -23,7 +23,7 @@ A Mavenized Java 8 CLI program connected to a PostgreSQL database. Submit a READ
 
 ### Functionality
 - [] CRUD - Create, Read, Update, Delete
-- [] CLI - command-line args and/or event-driven text menus
+- [x] CLI - command-line args and/or event-driven text menus
 - [] Login - Authentication & Authorization
 - [] Persisting State - Save/Load to file or DB
 
@@ -33,8 +33,8 @@ A Mavenized Java 8 CLI program connected to a PostgreSQL database. Submit a READ
 
 ## Example: The Banking App
 - [x] Build the application using Java 8.
-- [] All interaction with the user should be done through the console using the `Scanner` class.
-- [] Customers of the bank should be able to register with a username and password, and apply to open an account.
+- [x] All interaction with the user should be done through the console using the `Scanner` class.
+- [x] Customers of the bank should be able to register with a username and password, and apply to open an account.
 - [] Customers should be able to apply for joint accounts.
 - [] Once the account is open, customers should be able to withdraw, deposit, and transfer funds between accounts.
 - [] All basic validation should be done, such as trying to input negative amounts, overdrawing from accounts etc.
