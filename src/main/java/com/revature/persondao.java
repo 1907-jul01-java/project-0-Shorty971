@@ -14,26 +14,46 @@ public class persondao implements dao<User>{
 	            ResultSet resultSet = statement.executeQuery("select * from person");
 	            while (resultSet.next()) {
 	                User user = new User(resultSet.getInt("id"), resultSet.getString("username"), resultSet.getString("password"),resultSet.getInt("authority"),resultSet.getInt("accountnum"),resultSet.getBoolean("verified"));
-/*	                user.setId(resultSet.getInt("id"));
-	                user.setUsername(resultSet.getString("username"));
-	                user.setPassword(resultSet.getString("password"));
-	                user.setAuthority(resultSet.getInt("authority"));
-	                user.setAccountNumber(resultSet.getInt("accountnum"));
-	                user.setVerified(resultSet.getBoolean("verified"));
-	*/                users.add(user);
+	                users.add(user);
 	            }
 	        resultSet.close();
 	        } catch (SQLException e) {
 	        }
-	        
 	        return users;
 	    }
+
+	    @Override
+	    public User getNamedUser(String name) {
+	    	User users = new User();
+	        try {
+	        	 PreparedStatement pStatement = connection.prepareStatement("select * from person where username = ?");
+		            pStatement.setString(1, name);
+		            ResultSet resultSet = pStatement.executeQuery();
+	            while (resultSet.next()) {
+	                users = new User(resultSet.getInt("id"), resultSet.getString("username"), resultSet.getString("password"),resultSet.getInt("authority"),resultSet.getInt("accountnum"),resultSet.getBoolean("verified"));
+	            }
+	        resultSet.close();
+	        } catch (SQLException e) {
+	        }
+	        return users;
+	    }
+
 	    @Override
 	    public void update1(int balance,int accountnum, Account account ) {
 	    	try {
 	            PreparedStatement pStatement = connection.prepareStatement("update account set balance = ? where accountnumber = ?");
 	            pStatement.setInt(1, balance + Account.getBalance());
 	            pStatement.setInt(2, accountnum);
+	            pStatement.executeQuery();
+	        } catch (SQLException e) {
+	        }
+	    }
+	    @Override
+	    public void updateverified(int number,String name ) {
+	    	try {
+	            PreparedStatement pStatement = connection.prepareStatement("update person set verified = true accountnum = ? where username = ?");
+	            pStatement.setInt(1, number);
+	            pStatement.setString(2,name);
 	            pStatement.executeQuery();
 	        } catch (SQLException e) {
 	        }
@@ -124,5 +144,33 @@ public class persondao implements dao<User>{
 			
 		}
 
+	    @Override
+	    public List<User> getAllUnverified() {
+	    	List<User> users = new ArrayList<User>();
+	        try {
+	            Statement statement = connection.createStatement();
+	            ResultSet resultSet = statement.executeQuery("select * from person where verified = false");
+	            while (resultSet.next()) {
+	                User user = new User(resultSet.getInt("id"), resultSet.getString("username"), resultSet.getString("password"),resultSet.getInt("authority"),resultSet.getInt("accountnum"),resultSet.getBoolean("verified"));
+	                users.add(user);
+	            }
+	        resultSet.close();
+	        } catch (SQLException e) {
+	        }
+	        return users;
+	    }
+
+		public void insert(Account account) { 
+			 try {
+		            PreparedStatement pStatement = connection.prepareStatement("insert into Account(balance,accountnumber) values(?,?)");
+		        	pStatement.setInt(1, account.getBalance());
+		            pStatement.setInt(2, account.getAccountNumber());
+		            pStatement.executeUpdate();  
+			 } catch (SQLException e) {
+
+		        }
+		    }
+		
+		
 	}
 

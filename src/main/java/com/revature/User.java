@@ -72,7 +72,7 @@ class User {
 	}
 	@Override
 	public String toString() {
-		return "[\nUsername=" + Username + ", Password = " + Password + ", authority = " + Authority +  " Accountnumber = " + AccountNumber + "]";
+		return "[\nUsername=" + Username + ", Password = " + Password + ", authority = " + Authority +  " Accountnumber = " + AccountNumber + " Verified = " + Verified + "]";
 	}
 
 	public void setId(int int1) {

@@ -78,21 +78,37 @@ public class loggedin {
 								}*/
 							}	
 						}
-					//	- [] Employees of the bank should be able to view all of their customers information. This includes:
+					//	- [x] Employees of the bank should be able to view all of their customers information. This includes:
 				    //   - [x] Account information
-				    //   - [] Account balances
-				    //   - [] Personal information
+				    //   - [x] Account balances
+				    //   - [x] Personal information
 				 	//- [] Employees should be able to approve/deny open applications for accounts.
 					else if(loggedin.getAuthority() == 2){
 						System.out.println("Hello " + loggedin.getUsername());
-						System.out.println("1. View Users\n2.View user by name\n3.view unverified users\n4.verify user");
+						System.out.println("1. View Users\n2.View user by name\n3.view unverified users \n4.verify user");
 						int  loggedinuserchoice = logginginfo.nextInt(); 
 						switch(loggedinuserchoice) {
 						case 1: System.out.println(PersonDao.getAll());
 						break;
-						case 2:
-						case 3:
-						case 4:}
+						case 2: 
+							String nam = "Frank";
+							User lookup = PersonDao.getNamedUser(nam);
+							System.out.println(lookup);
+							Account ac2 = PersonDao.getAccount(lookup.getAccountNumber());
+							System.out.println("Balance: " + ac2.getBalance());
+						break;
+						case 3:System.out.println(PersonDao.getAllUnverified());
+						break;
+						case 4: System.out.println("Which account name do you want to verify");
+						Scanner verificationname = new Scanner(System.in);  // Create a Scanner object
+						String nameverify;
+						if (verificationname.hasNext()) { 
+							nameverify = verificationname.nextLine();
+							PersonDao.updateverified(6,nameverify);
+							PersonDao.insert(new Account(0,6));
+						}
+						break;
+						}
 					}
 					//- [] Bank admins should be able to view and edit all accounts. This includes:
 				    //  - [] Approving/denying accounts

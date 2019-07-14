@@ -4,6 +4,14 @@ public class Account {
 	private static int balance;
 	private static int AccountNumber;
 		
+	public Account(int i, int j) {
+		balance = i;
+		AccountNumber = j;
+		// TODO Auto-generated constructor stub
+	}
+	public Account() {
+		// TODO Auto-generated constructor stub
+	}
 	public static int getBalance() {
 		return balance;
 	}

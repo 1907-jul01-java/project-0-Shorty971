@@ -20,5 +20,11 @@ public interface dao<E> {
 	void update1(int balance, int account, Account account2);
 
 	Account getAccount(int accountnumber);
+
+	User getNamedUser(String name);
+
+	List<User> getAllUnverified();
+
+	void updateverified(int number, String name);
 	
 }

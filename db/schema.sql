@@ -2,8 +2,8 @@ drop table Person;
 drop table Account;
 
 
-select * from Person
-
+select * from Person where username = 'Frank'
+select * from person
 select * from Account
 select * from Account where accountnumber = 1
 select * from person where username = 'br' and password = '123'
