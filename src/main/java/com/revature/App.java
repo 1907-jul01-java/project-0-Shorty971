@@ -15,11 +15,8 @@ public class App {
     public static void main(String[] args) {
     signup sign = new signup();
     loggedin loggin = new loggedin();
-    	/*ConnectionUtil connection = new ConnectionUtil();
-    	connection.getconnection();
-    	connection.close();
-    	*/
-
+    ConnectionUtil connection = new ConnectionUtil();
+    persondao PersonDao = new persondao(connection.getconnection());
  //    	ArrayList<User> Users = new ArrayList<>();
         int choice =0;
 		while(choice !=3) {
@@ -28,13 +25,13 @@ public class App {
 		    if (mainchoice.hasNextInt()) { 
 		    	choice = mainchoice.nextInt();  // Read user input
 		    	switch(choice) {
-		    		case 1: loggin.loginView();
+		    		case 1: loggin.loginView(PersonDao);
 		    				break;
 		    		case 2: 
-		    				sign.signUpView();
+		    				sign.signUpView(PersonDao);
 		    				break;
 		    		case 3: 
-		    				System.out.println("Thank you and have a nice day");
+	System.out.println("Thank you and have a nice day");
 		    				break;
 		    		default: 
 		    				System.out.println("Choose 1 or 2 or 3");
@@ -44,6 +41,8 @@ public class App {
                 System.out.println("only numbers please");   
 		    	System.out.println("\n\n");
 		}
-	}
+		connection.close();
+		}
+    
 }
 

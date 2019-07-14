@@ -22,6 +22,7 @@ public class ConnectionUtil {
 			this.url = properties.getProperty("url");
 			this.user = properties.getProperty("user");
 			this.password = properties.getProperty("password");
+			System.out.println(this.url + " "+ this.user + " "+ this.password +" ");
 			this.connection = DriverManager.getConnection(this.url,this.user,this.password);
 		}
 		catch(SQLException e) {
