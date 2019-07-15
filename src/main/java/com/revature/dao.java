@@ -26,5 +26,5 @@ public interface dao<E> {
 	List<User> getAllUnverified();
 
 	void updateverified(int number, String name);
-	
+
 }

@@ -23,10 +23,13 @@ create table Account(
 	);
 	
 	
-	insert into Person(Username,Password,Authority,Accountnum,verified) values('emp',123,2,3,false);
+	insert into Person(Username,Password,Authority,Accountnum,verified) values('emp',123,2,50000,true);
 	insert into Account(balance,accountnumber) values(200,2);
 	update account set balance = 250 where accountnumber = 1	
-	
+	update person set verified = true where username = 'emp'
+		
+	update person set accountnum = 5000 where username = 'emp'
+select max(id) from account		
 	
 	
 	

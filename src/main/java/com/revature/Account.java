@@ -1,8 +1,8 @@
 package com.revature;
 
 public class Account {
-	private static int balance;
-	private static int AccountNumber;
+	private int balance;
+	private int AccountNumber;
 		
 	public Account(int i, int j) {
 		balance = i;
@@ -12,13 +12,13 @@ public class Account {
 	public Account() {
 		// TODO Auto-generated constructor stub
 	}
-	public static int getBalance() {
+	public int getBalance() {
 		return balance;
 	}
 	public void setBalance(int balance) {
-		Account.balance = balance;
+		this.balance = balance;
 	}
-	public static int getAccountNumber() {
+	public int getAccountNumber() {
 		return AccountNumber;
 	}
 	public void setAccountNumber(int accountNumber) {

@@ -42,7 +42,11 @@ public class persondao implements dao<User>{
 	    public void update1(int balance,int accountnum, Account account ) {
 	    	try {
 	            PreparedStatement pStatement = connection.prepareStatement("update account set balance = ? where accountnumber = ?");
-	            pStatement.setInt(1, balance + Account.getBalance());
+	            int bal = account.getBalance();
+	            System.out.print("bal = " + bal);
+	            int money = bal + balance;
+	            System.out.println("money = " + money);
+	            pStatement.setInt(1, money );
 	            pStatement.setInt(2, accountnum);
 	            pStatement.executeQuery();
 	        } catch (SQLException e) {
@@ -51,7 +55,7 @@ public class persondao implements dao<User>{
 	    @Override
 	    public void updateverified(int number,String name ) {
 	    	try {
-	            PreparedStatement pStatement = connection.prepareStatement("update person set verified = true accountnum = ? where username = ?");
+	            PreparedStatement pStatement = connection.prepareStatement("update person set verified = true, accountnum = ? where username = ?");
 	            pStatement.setInt(1, number);
 	            pStatement.setString(2,name);
 	            pStatement.executeQuery();
@@ -116,7 +120,7 @@ public class persondao implements dao<User>{
 		        }
 		        return use;
 		    }
-		 @Override
+		 
 		    public Account getAccount(int accountnumber) {
 			 Account acc = new Account();  
 			 try {
@@ -124,10 +128,8 @@ public class persondao implements dao<User>{
 		            pStatement.setInt(1, accountnumber);
 		            ResultSet resultSet = pStatement.executeQuery();
 		            	while (resultSet.next()) {
-		                Account ac = new Account();
-		                ac.setAccountNumber(resultSet.getInt("accountnumber"));
-		                ac.setBalance(resultSet.getInt("balance"));
-		                acc = ac;
+		                acc.setAccountNumber(resultSet.getInt("accountnumber"));
+		                acc.setBalance(resultSet.getInt("balance"));
 		            	}
 			 } catch (SQLException e) {
 		        }
@@ -170,7 +172,38 @@ public class persondao implements dao<User>{
 
 		        }
 		    }
-		
-		
+
+		public boolean UserNotInPerson(String username) {
+			// TODO Auto-generated method stub
+		    	String name = null;
+		        try {
+		        	 PreparedStatement pStatement = connection.prepareStatement("select * from person where username = ?");
+			            pStatement.setString(1, username);
+			            ResultSet resultSet = pStatement.executeQuery();
+		            while (resultSet.next()) {
+		                name = resultSet.getString("username");
+		            }
+		        resultSet.close();
+		        } catch (SQLException e) {
+		        }
+		        if(name != null)
+		        	return false;
+		        else 
+		        	return true;
+		    }
+
+		public int gethighestaccountnum() {
+			int num =0;
+		        try {
+		            Statement statement = connection.createStatement();
+		            ResultSet resultSet = statement.executeQuery("select max(id) from account");
+		            while (resultSet.next()) {
+		                num = resultSet.getInt("max");
+		            }
+		        resultSet.close();
+		        } catch (SQLException e) {
+		        }
+		        return num;
+		}
 	}
 
