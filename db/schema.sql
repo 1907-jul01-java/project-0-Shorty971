@@ -23,7 +23,7 @@ create table Account(
 	);
 	
 	
-	insert into Person(Username,Password,Authority,Accountnum,verified) values('emp',123,2,50000,true);
+	insert into Person(Username,Password,Authority,Accountnum,verified) values('joe',123,3,50001,true);
 	insert into Account(balance,accountnumber) values(200,2);
 	update account set balance = 250 where accountnumber = 1	
 	update person set verified = true where username = 'emp'

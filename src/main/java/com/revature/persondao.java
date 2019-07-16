@@ -205,5 +205,59 @@ public class persondao implements dao<User>{
 		        }
 		        return num;
 		}
+
+		public User getUser(String nameverify) {
+		 User use = new User();   
+		 try {
+	            PreparedStatement pStatement = connection.prepareStatement("select * from person where username = ?");
+	            pStatement.setString(1, nameverify);
+	            ResultSet resultSet = pStatement.executeQuery();
+	            while (resultSet.next()) {
+	                User user = new User();
+	                user.setUsername(resultSet.getString("username"));
+	                user.setPassword(resultSet.getString("password"));
+	                user.setAuthority(resultSet.getInt("authority"));
+	                user.setAccountNumber(resultSet.getInt("accountnum"));
+	                user.setVerified(resultSet.getBoolean("verified"));
+	                use = user;
+	            	}
+		 } catch (SQLException e) {
+	        }
+	        return use;
+	    }
+
+		public void deleteAccount(int accountNumber) {
+		      PreparedStatement pStatement;
+			try {
+				pStatement = connection.prepareStatement("delete from Account where accountnumber = ?");
+		          pStatement.setInt(1, accountNumber);
+		          pStatement.executeQuery();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	      
+		}
+	 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 

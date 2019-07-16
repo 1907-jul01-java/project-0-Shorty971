@@ -109,24 +109,109 @@ public class loggedin {
 					}
 					//- [] Bank admins should be able to view and edit all accounts. This includes:
 				    //  - [x] Approving/denying accounts
-				    //  - [] Withdrawing, depositing, transferring from all accounts
+				    //  - [x] Withdrawing, depositing, transferring from all accounts
 				    //   - [] Canceling accounts
 					else if (loggedin.getAuthority() == 3){
 						System.out.println("Hello " + loggedin.getUsername());
-						System.out.println("1. View Users\n2.View user by name\n3.view unverified users \n4.verify user");
+						System.out.println("1. View Users\n2.View user by name\n3.view unverified users "
+								+ "\n4.verify user\n5. Withdraw from user\n6. Deposit to user\n7. Transfer between users\n8. Delete user");
 						int  loggedinuserchoice = logginginfo.nextInt(); 
 						switch(loggedinuserchoice) {
+						case 1: System.out.println(PersonDao.getAll());
+						break;
+						case 2: System.out.print("Enter Username for lookup: ");		
+								Scanner namelookup = new Scanner(System.in);  // Create a Scanner object
+								if (namelookup.hasNext()) { 
+									String nam = namelookup.nextLine();
+									User lookup = PersonDao.getNamedUser(nam);
+									System.out.println(lookup);
+									Account ac2 = PersonDao.getAccount(lookup.getAccountNumber());
+									System.out.println("Balance: " + ac2.getBalance());
+								}
+						break;
+						case 3:System.out.println(PersonDao.getAllUnverified());
+						break;
 						case 4: System.out.println("Which account name do you want to verify");
-						Scanner verificationname = new Scanner(System.in);  // Create a Scanner object
-						String nameverify;
-						if (verificationname.hasNext()) { 
-							nameverify = verificationname.nextLine();
-							PersonDao.updateverified(6,nameverify);
-							PersonDao.insert(new Account(0,6));
+								Scanner verificationname = new Scanner(System.in);
+								String nameverify;
+								nameverify = verificationname.nextLine();
+								System.out.print(nameverify);
+								int acnum = PersonDao.gethighestaccountnum();
+								PersonDao.updateverified(acnum+1,nameverify);
+								PersonDao.insert(new Account(0,acnum+1));
+						break;
+						case 5: System.out.println("Which account name do you want to withdraw from");
+								Scanner acname = new Scanner(System.in);
+								String namewithdraw;
+								nameverify = acname.nextLine();
+								System.out.print("Enter withdraw amount: ");
+								Scanner withdrawamount = new Scanner(System.in);  // Create a Scanner object
+								User namedUser = PersonDao.getUser(nameverify);
+								Account nameaccount = PersonDao.getAccount(namedUser.getAccountNumber());
+								if (withdrawamount.hasNextInt()) { 
+									int amount = withdrawamount.nextInt();
+									int accountnum = namedUser.getAccountNumber();
+									if(amount <= nameaccount.getBalance()) {
+										PersonDao.update1(-amount, accountnum, nameaccount );
+									}
+								else
+									System.out.println("Cannot Withdraw more than is on your account");
+								}
+						break;
+						case 6: System.out.println("Which account name do you want to deposit to");
+						Scanner acname2 = new Scanner(System.in);
+						String namewithdraw2;
+						String nameverify2 = acname2.nextLine();
+						System.out.print("Enter withdraw amount: ");
+						Scanner withdrawamount2 = new Scanner(System.in);  // Create a Scanner object
+						User namedUser2 = PersonDao.getUser(nameverify2);
+						Account nameaccount2 = PersonDao.getAccount(namedUser2.getAccountNumber());
+						if (withdrawamount2.hasNextInt()) { 
+							int amount = withdrawamount2.nextInt();
+							int accountnum = namedUser2.getAccountNumber();
+							if(amount >= 0) {
+								PersonDao.update1(amount, accountnum, nameaccount2 );
+							}
+						else
+							System.out.println("Cannot Deposit this amount1");
 						}
 						break;
+						case 7: 
+								int amount = 0;
+								System.out.println("Which account name do you want to withdraw from");
+								Scanner transferwithdraw = new Scanner(System.in);
+								String nametransferwithdraw = transferwithdraw.nextLine();
+								System.out.print("Enter withdraw amount: ");
+								Scanner transferwithdrawamount = new Scanner(System.in);
+								if (transferwithdrawamount.hasNextInt()) { 
+									amount = transferwithdrawamount.nextInt();
+								}
+								User transferwithdrawUser = PersonDao.getUser(nametransferwithdraw);
+								Account transferwithdrawaccount = PersonDao.getAccount(transferwithdrawUser.getAccountNumber());
+								System.out.println("Which account name do you want to deposit to");
+								Scanner transferdeposit = new Scanner(System.in);
+								String nametransferdeposit = transferdeposit.nextLine();
+								User transferdepositUser = PersonDao.getUser(nametransferdeposit);
+								Account transferdepositaccount = PersonDao.getAccount(transferdepositUser.getAccountNumber());
+									int accountnum = transferwithdrawUser.getAccountNumber();
+									int accountnum2 = transferdepositUser.getAccountNumber();
+									if(amount <= transferwithdrawaccount.getBalance() && amount >=0) {
+										PersonDao.update1(-amount, accountnum, transferwithdrawaccount );
+										PersonDao.update1(amount, accountnum2, transferdepositaccount );
+									}
+								else
+									System.out.println("Cannot transfer this amount");
+							break;
+						case 8:  System.out.print("Enter Username for deletion: ");		
+						Scanner namedelete = new Scanner(System.in);  // Create a Scanner object
+						if (namedelete.hasNext()) { 
+							String nam = namedelete.nextLine();
+							User lookup = PersonDao.getNamedUser(nam);
+							int number = lookup.getAccountNumber();
+							PersonDao.deleteAccount(number);
 						}
-						
+							break;
+						}
 					}
 			 		}
 
