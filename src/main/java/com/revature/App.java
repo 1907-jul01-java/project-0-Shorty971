@@ -1,10 +1,5 @@
 package com.revature;
-import java.util.ArrayList;
 import java.util.Scanner;
-//- [] All information should be persisted using text files and serialization.
-//- [] 100% test coverage is expected using JUnit. You should be using TDD.
-//- [] Logging should be accomplished using Log4J. All transactions should be logged.
-//- [] Your database should include at least 1 stored procedure.
 public class App {
     public static void main(String[] args) {
     signup sign = new signup();

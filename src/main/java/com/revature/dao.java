@@ -27,4 +27,6 @@ public interface dao<E> {
 
 	void updateverified(int number, String name);
 
+	List<User> getAllgeneral();
+
 }

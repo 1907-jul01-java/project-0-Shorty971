@@ -23,6 +23,22 @@ public class persondao implements dao<User>{
 	    }
 
 	    @Override
+	    public List<User> getAllgeneral() {
+	    	List<User> users = new ArrayList<User>();
+	        try {
+	            Statement statement = connection.createStatement();
+	            ResultSet resultSet = statement.executeQuery("select * from person where authority = 1");
+	            while (resultSet.next()) {
+	                User user = new User(resultSet.getInt("id"), resultSet.getString("username"), resultSet.getString("password"),resultSet.getInt("authority"),resultSet.getInt("accountnum"),resultSet.getBoolean("verified"));
+	                users.add(user);
+	            }
+	        resultSet.close();
+	        } catch (SQLException e) {
+	        }
+	        return users;
+	    }
+
+	    @Override
 	    public User getNamedUser(String name) {
 	    	User users = new User();
 	        try {
@@ -43,9 +59,7 @@ public class persondao implements dao<User>{
 	    	try {
 	            PreparedStatement pStatement = connection.prepareStatement("update account set balance = ? where accountnumber = ?");
 	            int bal = account.getBalance();
-	            System.out.print("bal = " + bal);
 	            int money = bal + balance;
-	            System.out.println("money = " + money);
 	            pStatement.setInt(1, money );
 	            pStatement.setInt(2, accountnum);
 	            pStatement.executeQuery();
@@ -227,37 +241,12 @@ public class persondao implements dao<User>{
 	    }
 
 		public void deleteAccount(int accountNumber) {
-		      PreparedStatement pStatement;
 			try {
-				pStatement = connection.prepareStatement("delete from Account where accountnumber = ?");
-		          pStatement.setInt(1, accountNumber);
-		          pStatement.executeQuery();
+		        PreparedStatement pStatement2 = connection.prepareStatement("delete from person where accountnum = ?");
+		        pStatement2.setInt(1, accountNumber);
+		        pStatement2.executeQuery();
+		
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-	      
-		}
-	 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		}	
 	}
-
