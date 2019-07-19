@@ -134,26 +134,6 @@ public class persondao implements dao<User>{
 		        }
 		        return use;
 		    }
-		 @Override
-		    public employee getEmp(String username, String password) {
-			 employee emp = new employee();   
-			 try {
-		            PreparedStatement pStatement = connection.prepareStatement("select * from person where username = ? and password = ?");
-		            pStatement.setString(1, username);
-		            pStatement.setString(2, password);
-		            ResultSet resultSet = pStatement.executeQuery();
-		            while (resultSet.next()) {
-		                emp.setUsername(resultSet.getString("username"));
-		                emp.setPassword(resultSet.getString("password"));
-		                emp.setAuthority(resultSet.getInt("authority"));
-		                emp.setAccountNumber(resultSet.getInt("accountnum"));
-		                emp.setVerified(resultSet.getBoolean("verified"));
-		            	}
-			 } catch (SQLException e) {
-		        }
-		        return emp;
-		    }
-		
 		    public Account getAccount(int accountnumber) {
 			 Account acc = new Account();  
 			 try {
