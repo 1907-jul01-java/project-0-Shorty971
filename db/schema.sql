@@ -18,3 +18,5 @@ create table Account(
 	
 insert into Person(Username,Password,Authority,Accountnum,verified) values('emp',123,2,0,true);
 insert into Person(Username,Password,Authority,Accountnum,verified) values('adm',123,3,0,true);
+
+select * from person

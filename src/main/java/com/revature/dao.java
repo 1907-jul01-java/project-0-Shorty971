@@ -29,4 +29,6 @@ public interface dao<E> {
 
 	List<User> getAllgeneral();
 
+	employee getEmp(String username, String password);
+
 }
